@@ -1,0 +1,577 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Onlinestore
+  license:
+    name: MIT
+servers:
+  - url: http://onlinestore.swagger.io/v1
+paths:
+  /products:
+    get:
+      summary: get list of products
+      operationId: getProducts
+      tags:
+        - products
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: How many items to skip
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of products
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/ProductsResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    post:
+      summary: Create a product
+      operationId: createProduct
+      tags:
+        - products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                short_description:
+                  type: string
+                description:
+                  type: string
+                actual_price:
+                  type: float
+                sklad_id:
+                  type: integer  
+      responses:
+        '200':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+  /products/{id}:
+    get:
+      summary: Info for a specific product
+      operationId: getProduct
+      tags:
+        - products
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    put:
+      summary: replace a specific product
+      operationId: replaceProduct
+      tags:
+        - products
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                short_description:
+                  type: string
+                description:
+                  type: string
+                actual_price:
+                  type: float
+                discount:
+                  type: float
+                sklad_id:
+                  type: integer  
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    patch:
+      summary: patch a specific product
+      operationId: patchProduct
+      tags:
+        - products
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                short_description:
+                  type: string
+                description:
+                  type: string
+                actual_price:
+                  type: float
+                discount:
+                  type: float
+                sklad_id:
+                  type: integer  
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    delete:
+      summary: delete a specific product
+      operationId: deleteProduct
+      tags:
+        - products
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+  /sklads:
+    get:
+      summary: get list of sklads
+      operationId: getSklad
+      tags:
+        - sklads
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: How many items to skip
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of sklads
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/SkladsResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    post:
+      summary: Create a sklad
+      operationId: createSklad
+      tags:
+        - sklads
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                short_description:
+                  type: string
+                description:
+                  type: string
+                seller:
+                  type: string
+      responses:
+        '200':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkladResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+  /sklads/{id}:
+    get:
+      summary: Info for a specific sklad
+      operationId: getSklad
+      tags:
+        - sklads
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkladsResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    put:
+      summary: replace a specific sklad
+      operationId: replaceSklad
+      tags:
+        - sklads
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the sklad to retrieve
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                short_description:
+                  type: string
+                description:
+                  type: string
+                seller:
+                  type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkladsResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    patch:
+      summary: patch a specific sklad
+      operationId: patchSklad
+      tags:
+        - sklads
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                short_description:
+                  type: string
+                description:
+                  type: string
+                seller:
+                  type: string 
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SkladResponse"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+    delete:
+      summary: delete a specific sklad
+      operationId: deleteSklad
+      tags:
+        - sklads
+      parameters:
+        - id: Id
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ObjectDeleted"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - short_description
+        - actual_price
+        - sklad_id
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        short_description:
+          type: string
+        description:
+          type: string
+        actual_price:
+          type: float
+        discount:
+          type: float
+        sklad_id:
+          type: integer  
+          format: int64
+    ProductResponse:
+      type: object
+      required:
+        - data
+        - errors
+        - meta
+      properties:
+        data:        example:
+          data: []
+          meta: Deleted
+          $ref: "#/components/schemas/Product"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
+    ProductsResponse:
+      type: object
+      required:
+        - data
+        - errors
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Meta:
+      type: object
+    BadRequest:
+      type: object
+      required:
+        - data
+        - errors
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
+    Sklad:
+      type: object
+      required:
+        - id
+        - name
+        - short_description
+        - seller
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        short_description:
+          type: string
+        description:
+          type: string
+        seller:
+          type: string
+    SkladResponse:
+      type: object
+      required:
+        - data
+        - errors
+        - meta
+      properties:
+        data:
+          $ref: "#/components/schemas/Sklad"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
+    SkladResponse:
+      type: object
+      required:
+        - data
+        - errors
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sklad"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
+    ObjectDeleted:
+      type: object
+      required:
+        - data
+        - errors
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/Meta"
